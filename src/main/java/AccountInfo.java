@@ -1,4 +1,3 @@
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -26,13 +25,14 @@ public class AccountInfo {
         return cardBalance;
     }
 
-    public static boolean checkAccount(String cardNumber, String card_PIN) {
+    public static boolean checkAccountExistence(String cardNumber, String card_PIN) {
 
         if (accounts != null) {
 
             for (AccountInfo account : accounts) {
 
-                if (account.getCardNumber().equals(cardNumber) && account.getCard_PIN().equals(card_PIN)) return true;
+                if (account.getCardNumber().equals(cardNumber)
+                        && account.getCard_PIN().equals(card_PIN)) return true;
 
             }
 
@@ -41,17 +41,14 @@ public class AccountInfo {
         return false;
     }
 
-    public static double BalanceInfo(String cardNumber, String card_PIN) {
+    public static double getAccountBalance(String cardNumber, String card_PIN) {
 
         if (accounts != null) {
 
             for (AccountInfo account : accounts) {
 
-                if (account.getCardNumber().equals(cardNumber) && account.getCard_PIN().equals(card_PIN)) {
-
-                    return account.getCardBalance();
-
-                }
+                if (account.getCardNumber().equals(cardNumber)
+                        && account.getCard_PIN().equals(card_PIN)) return account.getCardBalance();
 
             }
 
@@ -60,16 +57,14 @@ public class AccountInfo {
         return -1;
     }
 
-    public static void print() {
+    public static void printAccountInfo() {
         int counter = 1;
 
         for (AccountInfo account : accounts) {
-
-            System.out.println("#" + counter++ +
-                    " - " + account.getCardNumber() +
-                    " : " + account.getCard_PIN() +
-                    " : " + account.getCardBalance());
-
+            System.out.println("#" + counter++
+                    + " ; " + account.getCardNumber()
+                    + " - " + account.getCard_PIN()
+                    + " - " + account.getCardBalance());
         }
     }
 }
