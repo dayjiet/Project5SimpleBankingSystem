@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Main {
+public class SimpleBankingSystem {
 
     static final int BIN = 400_000; // Bank Identification Number (BIN) must be 400_000
     static final int CAN_LENGTH = 10; // 9 digit customer account number (CAN) and 1 digit check digit (checksum)
