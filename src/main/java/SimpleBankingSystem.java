@@ -4,10 +4,9 @@ import java.util.Scanner;
 public class SimpleBankingSystem {
 
     static final int BIN = 400_000; // Bank Identification Number (BIN) must be 400_000
-    static final int CAN_LENGTH = 10; // 9 digit customer account number (CAN) and 1 digit check digit (checksum)
+    static final int CAN_LENGTH = 9; // 9 digit customer account number (CAN)
     static final int PIN_LENGTH = 4; // Card PIN Length
     static Scanner scanner = new Scanner(System.in);
-    static boolean logedIn = false;
 
     public static void main(String[] args) {
         showStartingMenu();
@@ -23,10 +22,7 @@ public class SimpleBankingSystem {
                 .charAt(0);
 
         switch (action) {
-            case '0' -> {
-                System.out.println("\nBye!");
-                scanner.close();
-            }
+            case '0' -> AccountInfo.exit(true);
             case '1' -> showNewAccountMenu();
             case '2' -> showLogInMenu();
             default -> showStartingMenu();
@@ -37,8 +33,11 @@ public class SimpleBankingSystem {
         System.out.println("\nYour card has been created");
         System.out.println("Your card number:");
 
+        // 15 digit number
+        String fifteenDigitNumber = String.valueOf(BIN) + generateRandomInt(CAN_LENGTH);
+
         // 16 digit customer card number
-        String cardNumber = String.valueOf(BIN) + generateRandomInt(CAN_LENGTH);
+        String cardNumber = fifteenDigitNumber + findChecksum(fifteenDigitNumber);
 
         System.out.println(cardNumber);
         System.out.println("Your card PIN:");
@@ -49,6 +48,7 @@ public class SimpleBankingSystem {
 
         AccountInfo.accounts.add(new AccountInfo(cardNumber, card_PIN, 0.00));
 
+        AccountInfo.printAccountInfo();
         showStartingMenu();
     }
 
@@ -64,8 +64,13 @@ public class SimpleBankingSystem {
 
             buffer.append(randomLimitedInt);
         }
-
         return buffer;
+    }
+
+    private static int findChecksum(String fifteenDigitNumber) {
+        int controlNumber = LuhnAlgorithm.findChecksum(fifteenDigitNumber);
+
+        return controlNumber % 10 == 0 ? 0 : 10 - (controlNumber % 10);
     }
 
     private static void showLogInMenu() {
@@ -82,8 +87,7 @@ public class SimpleBankingSystem {
                 .trim();
 
         if (AccountInfo.checkAccountExistence(cardNumber, card_PIN)) {
-            System.out.println("\nYou have successfully logged in!");
-            logedIn = true;
+            AccountInfo.logIn(true);
             showAccountMenu(cardNumber, card_PIN);
         } else {
             System.out.println("\nWrong card number or PIN!");
@@ -101,17 +105,13 @@ public class SimpleBankingSystem {
                 .charAt(0);
 
         switch (action) {
-            case '0' ->  {
-                System.out.println("\nBye!");
-                scanner.close();
-            }
+            case '0' -> AccountInfo.exit(true);
             case '1' -> {
                 System.out.println("\nBalance: " + AccountInfo.getAccountBalance(cardNumber, card_PIN));
                 showAccountMenu(cardNumber, card_PIN);
             }
             case '2' -> {
-                System.out.println("\nYou have successfully logged out!");
-                logedIn = false;
+                AccountInfo.logIn(false);
                 showStartingMenu();
             }
             default -> showAccountMenu(cardNumber, card_PIN);

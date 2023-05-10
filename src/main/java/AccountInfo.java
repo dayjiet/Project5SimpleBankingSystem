@@ -25,6 +25,23 @@ public class AccountInfo {
         return cardBalance;
     }
 
+    public static void logIn(boolean loggedIn) {
+
+        if (loggedIn) {
+            System.out.println("\nYou have successfully logged in!");
+        } else {
+            System.out.println("\nYou have successfully logged out!");
+        }
+    }
+
+    public static void exit(boolean exits) {
+
+        if (exits) {
+            System.out.println("\nBye!");
+            SimpleBankingSystem.scanner.close();
+        }
+    }
+
     public static boolean checkAccountExistence(String cardNumber, String card_PIN) {
 
         if (accounts != null) {
@@ -35,9 +52,7 @@ public class AccountInfo {
                         && account.getCard_PIN().equals(card_PIN)) return true;
 
             }
-
         }
-
         return false;
     }
 
@@ -51,9 +66,7 @@ public class AccountInfo {
                         && account.getCard_PIN().equals(card_PIN)) return account.getCardBalance();
 
             }
-
         }
-
         return -1;
     }
 
