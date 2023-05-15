@@ -3,16 +3,39 @@ import java.util.Scanner;
 
 public class SimpleBankingSystem {
 
+    static String url; // SQLite database Connection URL
     static final int BIN = 400_000; // Bank Identification Number (BIN) must be 400_000
     static final int CAN_LENGTH = 9; // 9 digit customer account number (CAN)
     static final int PIN_LENGTH = 4; // Card PIN Length
     static Scanner scanner = new Scanner(System.in);
 
+
     public static void main(String[] args) {
-        showStartingMenu();
+        // Database filename
+        String fileName = "temp";
+
+        /**
+        String fileName = null;
+
+        // Search for the '-fileName' argument in the command line arguments
+        for (int i = 0; i < args.length; i++) {
+
+            if (args[i].equals("-fileName")) {
+                // Get the next element as the value for fileName
+                fileName = args[i + 1];
+                break;
+            }
+
+        }
+         */
+
+        url = "jdbc:sqlite:" + fileName;
+
+        // Create new database
+        NewDatabase.connect();
     }
 
-    private static void showStartingMenu() {
+    static void showStartingMenu() {
         System.out.println("\n1. Create an account");
         System.out.println("2. Log into account");
         System.out.println("0. Exit");
@@ -34,40 +57,59 @@ public class SimpleBankingSystem {
         System.out.println("Your card number:");
 
         // 15 digit number
-        String fifteenDigitNumber = String.valueOf(BIN) + generateRandomInt(CAN_LENGTH);
+        long fifteenDigitNumber = BIN * 1000_000_000L + generateCAN();
 
         // 16 digit customer card number
-        String cardNumber = fifteenDigitNumber + findChecksum(fifteenDigitNumber);
+        long cardNumber = fifteenDigitNumber * 10 + findChecksum(fifteenDigitNumber);
 
         System.out.println(cardNumber);
         System.out.println("Your card PIN:");
 
-        String card_PIN = String.valueOf(generateRandomInt(PIN_LENGTH));
+        // 4 digit PIN
+        String card_PIN = generatePIN();
 
         System.out.println(card_PIN);
 
-        AccountInfo.accounts.add(new AccountInfo(cardNumber, card_PIN, 0.00));
+        // Adding new card information to SQLite database
+        AccountInfo accountInformation = new AccountInfo();
+        accountInformation.add(cardNumber, card_PIN);
 
-        AccountInfo.printAccountInfo();
+        // Printing new card information to the terminal
+        AccountInfo.printInfo();
         showStartingMenu();
     }
 
-    private static StringBuilder generateRandomInt(int CANLength) {
+    private static long generateCAN() {
         int leftLimit = 0;
         int rightLimit = 9;
 
         Random random = new Random();
-        StringBuilder buffer = new StringBuilder(CANLength);
+        StringBuilder buffer = new StringBuilder(CAN_LENGTH);
 
-        for (int i = 0; i < CANLength; i++) {
+        for (int i = 0; i < CAN_LENGTH; i++) {
             int randomLimitedInt = leftLimit + (int) (random.nextFloat() * (rightLimit - leftLimit + 1));
 
             buffer.append(randomLimitedInt);
         }
-        return buffer;
+        return Long.parseLong(String.valueOf(buffer));
     }
 
-    private static int findChecksum(String fifteenDigitNumber) {
+    private static String generatePIN() {
+        int leftLimit = 0;
+        int rightLimit = 9;
+
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(PIN_LENGTH);
+
+        for (int i = 0; i < PIN_LENGTH; i++) {
+            int randomLimitedInt = leftLimit + (int) (random.nextFloat() * (rightLimit - leftLimit + 1));
+
+            buffer.append(randomLimitedInt);
+        }
+        return String.valueOf(buffer);
+    }
+
+    private static int findChecksum(long fifteenDigitNumber) {
         int controlNumber = LuhnAlgorithm.findChecksum(fifteenDigitNumber);
 
         return controlNumber % 10 == 0 ? 0 : 10 - (controlNumber % 10);
@@ -77,8 +119,7 @@ public class SimpleBankingSystem {
         System.out.println("\nEnter your card number:");
 
         // 16 digit customer card number
-        String cardNumber = scanner.nextLine()
-                .trim();
+        long cardNumber = Long.parseLong(scanner.nextLine());
 
         System.out.println("Enter your PIN:");
 
@@ -86,7 +127,7 @@ public class SimpleBankingSystem {
         String card_PIN = scanner.nextLine()
                 .trim();
 
-        if (AccountInfo.checkAccountExistence(cardNumber, card_PIN)) {
+        if (AccountInfo.check(cardNumber, card_PIN)) {
             AccountInfo.logIn(true);
             showAccountMenu(cardNumber, card_PIN);
         } else {
@@ -95,7 +136,7 @@ public class SimpleBankingSystem {
         }
     }
 
-    private static void showAccountMenu(String cardNumber, String card_PIN) {
+    private static void showAccountMenu(long cardNumber, String card_PIN) {
         System.out.println("\n1. Balance");
         System.out.println("2. Log out");
         System.out.println("0. Exit");
@@ -107,7 +148,7 @@ public class SimpleBankingSystem {
         switch (action) {
             case '0' -> AccountInfo.exit(true);
             case '1' -> {
-                System.out.println("\nBalance: " + AccountInfo.getAccountBalance(cardNumber, card_PIN));
+                System.out.println("\nBalance: " + AccountInfo.getBalance(cardNumber, card_PIN));
                 showAccountMenu(cardNumber, card_PIN);
             }
             case '2' -> {

@@ -1,9 +1,14 @@
 public class LuhnAlgorithm {
-    public static int findChecksum(String fifteenDigitNumber) {
-        int[] arrayOfDigits = new int[fifteenDigitNumber.length()];
+    public static int findChecksum(long fifteenDigitNumber) {
+        int length = 15;
 
-        for (int i = 0; i < arrayOfDigits.length; i++) {
-            int separateDigit = Character.getNumericValue(fifteenDigitNumber.charAt(i));
+        // Array of 15 digits
+        int[] arrayOfDigits = new int[length];
+        int i = arrayOfDigits.length - 1;
+
+        while (fifteenDigitNumber > 0) {
+            int separateDigit = (int) (fifteenDigitNumber % 10);
+            fifteenDigitNumber /= 10;
 
             if (i % 2 == 0) {
                 //  Multiplying odd digits by 2 and subtracting 9 to numbers over 9
@@ -11,6 +16,8 @@ public class LuhnAlgorithm {
             } else {
                 arrayOfDigits[i] = separateDigit;
             }
+
+            i--;
         }
 
         int controlNumber = 0;

@@ -1,28 +1,65 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.sql.*;
 
 public class AccountInfo {
-    String cardNumber;
-    String card_PIN;
-    double cardBalance;
-    static List<AccountInfo> accounts = new ArrayList<>();
+    public void add(long number, String pin) {
+        String sql = "INSERT INTO card (number,pin)" +
+                "VALUES (?,?)";
 
-    public AccountInfo(String cardNumber, String card_PIN, double cardBalance) {
-        this.cardNumber = cardNumber;
-        this.card_PIN = card_PIN;
-        this.cardBalance = cardBalance;
+        try (Connection connection = DBConnection.start();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, number);
+            preparedStatement.setString(2, pin);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public static boolean check(long queryNumber, String queryPin) {
+        String sql = "SELECT *  FROM card";
+
+        try (Connection connection = DBConnection.start();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                long number = resultSet.getLong("number");
+                String pin = resultSet.getString("pin");
+
+                if (queryNumber == number && queryPin.equals(pin)) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public String getCard_PIN() {
-        return card_PIN;
-    }
+    public static double getBalance(long queryNumber, String queryPin) {
 
-    public double getCardBalance() {
-        return cardBalance;
+        String sql = "SELECT *  FROM card";
+
+        try (Connection connection = DBConnection.start();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                long number = resultSet.getLong("number");
+                String pin = resultSet.getString("pin");
+                int balance  =resultSet.getInt("balance");
+
+                if (queryNumber == number && queryPin.equals(pin)) {
+                    return balance;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     public static void logIn(boolean loggedIn) {
@@ -42,42 +79,27 @@ public class AccountInfo {
         }
     }
 
-    public static boolean checkAccountExistence(String cardNumber, String card_PIN) {
+    public static void printInfo() {
+        String sql = "SELECT *  FROM card";
 
-        if (accounts != null) {
+        try (Connection connection = DBConnection.start();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            for (AccountInfo account : accounts) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                long number = resultSet.getLong("number");
+                String pin = resultSet.getString("pin");
+                int balance  =resultSet.getInt("balance");
 
-                if (account.getCardNumber().equals(cardNumber)
-                        && account.getCard_PIN().equals(card_PIN)) return true;
-
+                System.out.println("#" + id
+                        + " : " + number
+                        + " - " + pin
+                        + " - " + balance);
             }
-        }
-        return false;
-    }
 
-    public static double getAccountBalance(String cardNumber, String card_PIN) {
-
-        if (accounts != null) {
-
-            for (AccountInfo account : accounts) {
-
-                if (account.getCardNumber().equals(cardNumber)
-                        && account.getCard_PIN().equals(card_PIN)) return account.getCardBalance();
-
-            }
-        }
-        return -1;
-    }
-
-    public static void printAccountInfo() {
-        int counter = 1;
-
-        for (AccountInfo account : accounts) {
-            System.out.println("#" + counter++
-                    + " ; " + account.getCardNumber()
-                    + " - " + account.getCard_PIN()
-                    + " - " + account.getCardBalance());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
