@@ -31,6 +31,13 @@ To run the Simple Banking System project, follow these steps:
 4. Run the project: Execute the compiled Main class, providing the optional command-line argument -fileName to specify the database file name. If no file name is provided, the default file name will be used.
 5. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
 
+## Feedback
+During this project, I learned about the functioning of a banking system and gained knowledge about SQL and databases. Understanding how the Luhn algorithm works was particularly valuable in preventing errors when entering card numbers. Additionally, I grasped basic object-oriented programming concepts, such as working with classes.
+
+While working on the project, I encountered a few difficulties. Setting up and connecting to the database required some effort, but I was able to overcome it by studying the documentation and seeking guidance from online resources. Designing the system to handle various banking operations and ensuring data security also posed challenges, but careful planning and research helped me overcome these obstacles.
+
+Overall, this project provided me with a practical understanding of banking systems and allowed me to develop my skills in working with databases, SQL, and object-oriented programming. It was a valuable learning experience that enhanced my knowledge and problem-solving abilities.
+
 ## Contributing
 Contributions to the Simple Banking System project are welcome. If you would like to contribute, please follow these guidelines:
 
