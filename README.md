@@ -5,7 +5,6 @@
 - [Description](#description)
 - [Features](#features)
 - [Usage](#usage)
-- [Feedback](#feedback)
 - [Contributing](#contributing)
 - [Dependencies](#dependencies)
 - [Contact Information](#contact-information)
