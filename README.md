@@ -57,6 +57,5 @@ The Simple Banking System project has the following dependencies:
 
 ## Contact Information
 If you have any questions or concerns regarding the Simple Banking System project, please contact the project maintainer:
-
-Name: Daulet Toganbayev
-Email: daulet.toganbayev@gmail.com
+- Name: Daulet Toganbayev
+- Email: daulet.toganbayev@gmail.com
