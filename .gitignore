@@ -7,7 +7,6 @@ target/
 .gradle/*
 .idea/*
 .build/*
-!**/libs/Project5SimpleBankingSystem-1.0-SNAPSHOT.jar
 *.iws
 *.iml
 *.ipr

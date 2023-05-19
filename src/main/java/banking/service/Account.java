@@ -1,11 +1,20 @@
 package banking.service;
 
-import banking.dao.*;
+import banking.dao.Table;
 
+/**
+ * The Account class represents a user account in the banking system.
+ * It provides methods for adding an account, checking account validity, retrieving account balance, and managing
+ * the login and exit status.
+ */
 public class Account {
 
-    /** This method adds a new record to the card table in a database. The record consists of the number and
-    pin values */
+    /**
+     * Adds a new account to the system with the specified card number and PIN.
+     *
+     * @param number The card number of the account.
+     * @param pin The PIN of the account.
+     */
     public void add(String number, String pin) {
         String sql = "INSERT INTO card (number,pin)" +
                 "VALUES (?,?)";
@@ -13,30 +22,49 @@ public class Account {
         Table.add(sql, number, pin);
     }
 
-    /** This method checks if there is an account with the provided account number (queryNumber) and
-    PIN (queryPIN) in the database */
+    /**
+     * Checks if the provided card number and PIN are valid and exist in the system.
+     *
+     * @param queryNumber The card number to check.
+     * @param queryPIN The PIN to check.
+     * @return True if the card number and PIN are valid and exist in the system, false otherwise.
+     */
     public static boolean check(String queryNumber, String queryPIN) {
         String sql = "SELECT * FROM card";
 
         return (Table.check(sql, queryNumber, queryPIN));
     }
 
-    /** This method checks if there is an account with the provided account number (queryNumber) in the database */
+    /**
+     * Checks if the provided card number exists in the system.
+     *
+     * @param queryNumber The card number to check.
+     * @return True if the card number exists in the system, false otherwise.
+     */
     public static boolean checkNumber(String queryNumber) {
         String sql = "SELECT * FROM card";
 
         return Table.checkNumber(sql, queryNumber);
     }
 
-    /** This method retrieves the balance of an account with the provided account number (queryNumber) and
-    PIN (queryPIN) */
+    /**
+     * Retrieves the account balance associated with the provided card number and PIN.
+     *
+     * @param queryNumber The card number of the account.
+     * @param queryPIN The PIN of the account.
+     * @return The account balance.
+     */
     public static double getBalance(String queryNumber, String queryPIN) {
         String sql = "SELECT *  FROM card";
 
         return Table.getBalance(sql, queryNumber, queryPIN);
     }
 
-    /** This method displays a message indicating whether the user has successfully logged in or logged out*/
+    /**
+     * Updates the logged-in status of the user.
+     *
+     * @param loggedIn True if the user is logged in, false otherwise.
+     */
     public static void isLoggedIn(boolean loggedIn) {
         if (loggedIn) {
             System.out.println("\nYou have successfully logged in!");
@@ -45,7 +73,11 @@ public class Account {
         }
     }
 
-    /** This method displays a message indicating whether the user has exited the program */
+    /**
+     * Updates the exited status of the program.
+     *
+     * @param exited True if the program is exited, false otherwise.
+     */
     public static void isExited(boolean exited) {
         if (exited) {
             System.out.println("\nBye!");

@@ -26,7 +26,7 @@ The Simple Banking System offers the following features:
 6. Account Closure: Logged-in users can close their account.
 
 ## Usage
-To run the Simple Banking System project, follow these steps:
+### To run the Simple Banking System project, follow these steps:
 
 1. Set up the database: The project uses an SQLite database. Ensure that the SQLite JDBC driver is installed.
 2. Download the project files: Obtain the project files from the provided link.
@@ -34,7 +34,19 @@ To run the Simple Banking System project, follow these steps:
 4. Run the project: Execute the compiled Main class, providing the optional command-line argument -fileName to specify the database file name. If no file name is provided, the default file name will be used.
 5. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
 
-To run the Project5SimpleBankingSystem-1.0-SNAPSHOT.jar file, perform the following steps:
+### To create a JAR file for the Simple Banking System project, perform the following steps:
+1. Compile the project: Compile the Java classes using a Java compiler.
+2. Create a manifest file: Create a text file named manifest.txt and add the following content:
+```shell
+Main-Class: Main
+```
+3. Create the JAR file: Open a terminal or command prompt, navigate to the directory containing the compiled classes and the manifest.txt file, and execute the following command:
+```shell
+jar cvfm SimpleBankingSystem.jar manifest.txt *.class
+```
+4. The SimpleBankingSystem.jar file will be created in the current directory.
+
+### To run the Project5SimpleBankingSystem-1.0-SNAPSHOT.jar file, perform the following steps:
 
 1. Download the JAR file.
 2. Open a terminal or command prompt: Navigate to the directory where the JAR file is located.

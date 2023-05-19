@@ -7,24 +7,29 @@ import java.sql.SQLException;
 
 import static banking.SimpleBankingSystem.URL;
 
+/**
+ * The DBConnection class is responsible for establishing a connection to the database.
+ * It provides a method to start the connection and retrieve the connection object.
+ */
 public class DBConnection {
-    // Declare a static variable to hold the connection object
     static Connection connection = null;
-    // Define a method to start the database connection
+
+    /**
+     * Starts the database connection.
+     *
+     * @return The connection object.
+     * @throws SQLException if a database access error occurs.
+     */
     public static Connection start() throws SQLException {
-        // Create a new SQLite data source
         SQLiteDataSource dataSource = new SQLiteDataSource();
-        // Set the URL for the data source
         dataSource.setUrl(URL);
 
         try {
-            // Attempt to establish a connection using the data source
             connection = dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Return the connection object
         return connection;
     }
 }

@@ -1,9 +1,17 @@
 package banking.service;
 
+/**
+ * The BIN class represents the Bank Identification Number (BIN) used in the banking system.
+ * It provides a method to retrieve the BIN value.
+ */
 public class BIN {
-    // Declares a public class named "BIN"
     static final String BIN = "400000";
-    // Defines a public static method named "get" which returns the value of "BIN"
+
+    /**
+     * Retrieves the Bank Identification Number (BIN).
+     *
+     * @return The BIN value.
+     */
     public static String get() {
         return BIN;
     }

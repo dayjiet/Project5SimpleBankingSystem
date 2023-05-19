@@ -1,27 +1,35 @@
 package banking.service;
 
+/**
+ * The Checksum class represents the checksum used to validate a credit card number.
+ * It provides a method to find the checksum and a method to validate a checksum.
+ */
 public class Checksum {
-    // Defines a public static method named "find" which calculates the checksum digit for a given fifteen-digit number
+
+    /**
+     * Finds the checksum for a given fifteen-digit number.
+     *
+     * @param fifteenDigitNumber The fifteen-digit number to calculate the checksum for.
+     * @return The calculated checksum.
+     */
     public static String find(String fifteenDigitNumber) {
-        // Calls the "check" method from the "LuhnAlgorithm" class to calculate the control number
         int controlNumber = LuhnAlgorithm.check(fifteenDigitNumber);
 
-        // Returns the calculated checksum digit as a String
         return String.valueOf(controlNumber % 10 == 0 ? 0 : 10 - (controlNumber % 10));
     }
 
-    // Defines a public static method named "isValid" which checks the validity of a given number with checksum
+    /**
+     * Validates a checksum for a given number.
+     *
+     * @param number The number containing the fifteen-digit number and the checksum.
+     * @return True if the checksum is valid, false otherwise.
+     */
     public static boolean isValid(String number) {
-        // Extracts the fifteen-digit number from the input by taking the substring from index 0 to 14
         String fifteenDigitNumber = number.substring(0, 15);
-        // Extracts the checksum digit from the input by taking the substring at index 15
         String checksum = number.substring(15);
 
-        // Calls the "check" method from the "LuhnAlgorithm" class
-        // to calculate the control number for the fifteen-digit number
         int controlNumber = LuhnAlgorithm.check(fifteenDigitNumber);
 
-        // Checks if the sum of the control number and the parsed checksum digit is divisible by 10
         return (controlNumber + Integer.parseInt(checksum)) % 10 == 0;
     }
 }

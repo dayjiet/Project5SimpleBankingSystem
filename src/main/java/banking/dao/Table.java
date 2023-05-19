@@ -6,12 +6,29 @@ import banking.service.Checksum;
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * The Table class provides methods to interact with the database table "card".
+ * It includes methods to create the table, add records, update balance, perform transfers, check account information,
+ * and delete accounts.
+ */
 public class Table {
+    /**
+     * The active account number for the current session.
+     */
     public static String activeAccountNumber;
+    /**
+     * The active account PIN for the current session.
+     */
     public static String activeAccountPIN;
+    /**
+     * Scanner object to read user input from the console.
+     */
     public static Scanner tableScanner = new Scanner(System.in);
+
+    /**
+     * Creates the "card" table in the database if it does not exist.
+     */
     public static void create() {
-        // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS card (" +
                 "id INTEGER PRIMARY KEY," +
                 "number TEXT," +
@@ -19,21 +36,22 @@ public class Table {
                 "balance INTEGER DEFAULT 0" +
                 ");";
 
-        // Create a new table by executing the SQL statement
         try (Connection connection = DBConnection.start();
              Statement statement = connection.createStatement()) {
-            // Create a new table
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /** This method implements adding a new record to the "card" table in a database. The record consists of the
-     * number and pin values */
+    /**
+     * Adds a new record to the "card" table with the specified card number and PIN.
+     *
+     * @param sql The SQL query to add a new record.
+     * @param number The card number to be added.
+     * @param pin The PIN associated with the card number.
+     */
     public static void add(String sql, String number, String pin) {
-        // Creates a database connection using the DBConnection.start() method and
-        // prepares a SQL statement for execution
         try (Connection connection = DBConnection.start();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, number);
@@ -45,16 +63,16 @@ public class Table {
         }
     }
 
+    /**
+     * Updates the balance of the active account by adding the specified income.
+     */
     public static void update() {
-        // Read the income value from user input
         int income = tableScanner.nextInt();
 
-        // SQL statement for updating a table
         String sql = "UPDATE card " +
                 "SET balance = balance + ? " +
                 "WHERE number = ? AND pin = ?";
 
-        // Update the balance of the active account by executing the SQL statement
         try (Connection connection = DBConnection.start();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setInt(1, income);
@@ -69,39 +87,35 @@ public class Table {
         }
     }
 
+    /**
+     * Performs a transfer of money from the active account to the specified card number.
+     */
     public static void transfer() {
-        // Read the recipient's card number from user input
         String transferNumber = tableScanner.next();
 
-        // Check the validity of the recipient's card number
         if (!Checksum.isValid(transferNumber)) {
             System.out.println("\nProbably you made a mistake in the card number. Please try again!");
             return;
         }
 
-        // Check if the recipient and sender card numbers are different
         if (transferNumber.equals(activeAccountNumber)) {
             System.out.println("\nYou can't transfer money to the same account!");
             return;
         }
 
-        // Check if the recipient's card number exists
         if (!Account.checkNumber(transferNumber)) {
             System.out.println("Such a card does not exist.");
             return;
         }
 
         System.out.println("Enter how much money you want to transfer:");
-        // Read the transfer amount from user input
         int income = tableScanner.nextInt();
 
-        // Check if the active account has enough balance for the transfer
         if (Account.getBalance(activeAccountNumber, activeAccountPIN) < income) {
             System.out.println("Not enough money!");
             return;
         }
 
-        // SQL statement for updating the table
         String sql = "UPDATE card " +
                 "SET balance = CASE " +
                 "WHEN number = ? THEN balance + ? " +
@@ -109,7 +123,6 @@ public class Table {
                 "ELSE balance " +
                 "END";
 
-        // Update the balances of the sender and recipient accounts by executing the SQL statement
         try (Connection connection = DBConnection.start();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 
@@ -125,8 +138,14 @@ public class Table {
         }
     }
 
-    /** This method implements checking if there is an account with the provided account number (queryNumber) and
-     PIN (queryPIN) in the database */
+    /**
+     * Checks if the specified card number and PIN combination exists in the "card" table.
+     *
+     * @param sql The SQL query to check the account.
+     * @param queryNumber The card number to be checked.
+     * @param queryPIN The PIN associated with the card number.
+     * @return {@code true} if the account exists, {@code false} otherwise.
+     */
     public static boolean check(String sql, String queryNumber, String queryPIN) {
         try (Connection connection = DBConnection.start();
              Statement statement = connection.createStatement();
@@ -136,7 +155,6 @@ public class Table {
                 String number = resultSet.getString("number");
                 String PIN = resultSet.getString("pin");
 
-                // Checks if the provided account number and PIN match the values in the current row
                 if (queryNumber.equals(number) && queryPIN.equals(PIN)) {
                     activeAccountNumber = queryNumber;
                     activeAccountPIN = queryPIN;
@@ -151,8 +169,13 @@ public class Table {
         return false;
     }
 
-    /** This method implements checking if there is an account with the provided account number (queryNumber)
-     * in the database */
+    /**
+     * Checks if the specified card number exists in the "card" table.
+     *
+     * @param sql The SQL query to check the card number.
+     * @param queryNumber The card number to be checked.
+     * @return {@code true} if the card number exists, {@code false} otherwise.
+     */
     public static boolean checkNumber(String sql, String queryNumber) {
         try (Connection connection = DBConnection.start();
              Statement statement = connection.createStatement();
@@ -161,7 +184,6 @@ public class Table {
             while (resultSet.next()) {
                 String number = resultSet.getString("number");
 
-                // Checks if the provided account number matches the value in the current row
                 if (queryNumber.equals(number)) {
                     return true;
                 }
@@ -173,8 +195,14 @@ public class Table {
         return false;
     }
 
-    /** This method implements retrieving the balance of an account with the provided account number (queryNumber) and
-     PIN (queryPIN) */
+    /**
+     * Retrieves the balance of the specified account from the "card" table.
+     *
+     * @param sql The SQL query to retrieve the balance.
+     * @param queryNumber The card number of the account.
+     * @param queryPIN The PIN associated with the card number.
+     * @return The balance of the account, or -1 if the account is not found.
+     */
     public static double getBalance(String sql, String queryNumber, String queryPIN) {
         try (Connection connection = DBConnection.start();
              Statement statement = connection.createStatement();
@@ -185,7 +213,6 @@ public class Table {
                 String pin = resultSet.getString("pin");
                 int balance = resultSet.getInt("balance");
 
-                // checks if the provided account number and PIN match the values in the current row
                 if (queryNumber.equals(number) && queryPIN.equals(pin)) {
                     return balance;
                 }
@@ -198,12 +225,13 @@ public class Table {
         return -1;
     }
 
+    /**
+     * Deletes the active account from the "card" table.
+     */
     public static void delete() {
-        // SQL statement for deleting from the table
         String sql = "DELETE FROM card " +
                 "WHERE number = ?";
 
-        // Delete the active account from the table by executing the SQL statement
         try (Connection connection = DBConnection.start();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, activeAccountNumber);
