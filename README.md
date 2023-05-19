@@ -46,15 +46,13 @@ jar cvfm SimpleBankingSystem.jar manifest.txt *.class
 ```
 4. The SimpleBankingSystem.jar file will be created in the current directory.
 
-### To run the Project5SimpleBankingSystem-1.0-SNAPSHOT.jar file, perform the following steps:
+### To run the JAR file, perform the following steps:
 
-1. Download the JAR file.
-2. Open a terminal or command prompt: Navigate to the directory where the JAR file is located.
-3. Run the JAR file: Enter the following command to execute the JAR file:
+1. Run the JAR file: Enter the following command to execute the JAR file:
 ```shell
 java -jar Project5SimpleBankingSystem-1.0-SNAPSHOT.jar
 ```
-4. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
+2. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
 
 ## Feedback
 During this project, I learned about the functioning of a banking system and gained knowledge about SQL and databases. Understanding how the Luhn algorithm works was particularly valuable in preventing errors when entering card numbers. Additionally, I grasped basic object-oriented programming concepts, such as working with classes.
