@@ -1,4 +1,4 @@
-package banking.util;
+package banking.service;
 
 public class BIN {
     // Declares a public class named "BIN"

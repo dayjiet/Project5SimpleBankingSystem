@@ -54,8 +54,8 @@ Contributions to the Simple Banking System project are welcome. If you would lik
 ## Dependencies
 The Simple Banking System project has the following dependencies:
 
-1. Java Development Kit (JDK): Ensure that you have a compatible JDK installed.
-2. SQLite JDBC Driver: Obtain the driver from a reliable source and include it in the project's classpath.
+1. Java Development Kit (JDK): Ensure that you have a compatible JDK installed. Make sure you have JDK version 17.0 or higher installed. You can download the latest JDK from the [official Oracle website](https://www.oracle.com/java/technologies/downloads/#java17).
+2. SQLite JDBC Driver: Obtain the driver from a reliable source and include it in the project's classpath. The recommended version is 3.41.2. You can download the JDBC driver from the [SQLite JDBC Driver website](https://github.com/xerial/sqlite-jdbc/releases) or include it as a Maven/Gradle dependency.
 
 ## Contact Information
 If you have any questions or concerns regarding the Simple Banking System project, please contact the project maintainer:

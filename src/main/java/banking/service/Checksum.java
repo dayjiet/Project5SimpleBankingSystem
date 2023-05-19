@@ -1,4 +1,4 @@
-package banking.util;
+package banking.service;
 
 public class Checksum {
     // Defines a public static method named "find" which calculates the checksum digit for a given fifteen-digit number

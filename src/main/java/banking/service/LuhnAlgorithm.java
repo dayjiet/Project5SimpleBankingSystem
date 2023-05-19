@@ -1,4 +1,4 @@
-package banking.util;
+package banking.service;
 
 public class LuhnAlgorithm {
     // Defines a public static method named "check" which calculates the control number

@@ -1,18 +1,14 @@
-package banking.base;
+package banking.view;
 
-import banking.Account;
-import banking.data.Table;
-import banking.util.BIN;
-import banking.util.CAN;
-import banking.util.Checksum;
-import banking.util.PIN;
+import banking.service.*;
+import banking.dao.Table;
 
 import java.util.Scanner;
 
 public class Menu {
     public static Scanner menuScanner = new Scanner(System.in);
 
-    // Displays options to create an account, log into an account, or exit
+    /** Displays options to create an account, log into an account, or exit */
     public static void showStarting() {
         System.out.println("\n1. Create an account");
         System.out.println("2. Log into account");
@@ -32,17 +28,14 @@ public class Menu {
         }
     }
 
-    // Generates a new card number and PIN, adds the new card information to the database, and
-    // prints the information to the terminal
+    /** Generates a new card number and PIN, adds the new card information to the database, and
+    prints the information to the terminal */
     private static void showNewAccount() {
         System.out.println("\nYour card has been created");
         System.out.println("Your card number:");
 
-        // Generate a 15-digit number
-        String fifteenDigitNumber = BIN.get() + CAN.generate();
-
-        // Create a 16-digit customer card number by appending a checksum
-        String cardNumber = fifteenDigitNumber + Checksum.find(fifteenDigitNumber);
+        // Generate a 16-digit customer card number by appending a checksum
+        String cardNumber = CardNumber.generate();
 
         System.out.println(cardNumber);
         System.out.println("Your card PIN:");
@@ -60,8 +53,8 @@ public class Menu {
         showStarting();
     }
 
-    // Prompts the user to enter their card number and PIN, checks if the entered information is valid, and
-    // either logs the user in or displays an error message
+    /** Prompts the user to enter their card number and PIN, checks if the entered information is valid, and
+    either logs the user in or displays an error message */
     private static void showLogIn() {
         Scanner logInScanner = new Scanner(System.in);
 
@@ -69,9 +62,19 @@ public class Menu {
         // Read the user's card number
         String cardNumber = logInScanner.next();
 
+        if (!CardNumber.isValid(cardNumber)) {
+            System.out.println("\nProbably you made a mistake in the card number. Please try again!");
+            showLogIn();
+        }
+
         System.out.println("Enter your PIN:");
         // Read the user's PIN
         String card_PIN = logInScanner.next();
+
+        if (!PIN.isValid(card_PIN)) {
+            System.out.println("\nProbably you made a mistake in the PIN. Please try again!");
+            showLogIn();
+        }
 
         if (Account.check(cardNumber, card_PIN)) {
             // Log in the user
@@ -87,7 +90,7 @@ public class Menu {
         logInScanner.close();
     }
 
-    // Displays options to view balance, add income, perform a transfer, close the account, log out, or exit
+    /** Displays options to view balance, add income, perform a transfer, close the account, log out, or exit */
     public static void showAccount(String cardNumber, String card_PIN) {
         System.out.println("\n1. Balance");
         System.out.println("2. Add income");

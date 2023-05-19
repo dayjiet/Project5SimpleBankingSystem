@@ -1,12 +1,12 @@
-package banking.data;
+package banking.dao;
 
-import banking.base.Menu;
+import banking.view.Menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Database {
-    // Establishes a connection to the database
+    /** Establishes a connection to the database */
     public static void connect() {
         try (Connection connection = DBConnection.start()) {
 

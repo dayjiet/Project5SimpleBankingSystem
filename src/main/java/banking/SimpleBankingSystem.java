@@ -1,6 +1,6 @@
 package banking;
 
-import banking.data.Database;
+import banking.dao.Database;
 
 public class SimpleBankingSystem {
 

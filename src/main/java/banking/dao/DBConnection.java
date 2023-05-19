@@ -1,4 +1,4 @@
-package banking.data;
+package banking.dao;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -11,7 +11,7 @@ public class DBConnection {
     // Declare a static variable to hold the connection object
     static Connection connection = null;
     // Define a method to start the database connection
-    public static Connection start() {
+    public static Connection start() throws SQLException {
         // Create a new SQLite data source
         SQLiteDataSource dataSource = new SQLiteDataSource();
         // Set the URL for the data source
