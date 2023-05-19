@@ -34,6 +34,16 @@ To run the Simple Banking System project, follow these steps:
 4. Run the project: Execute the compiled Main class, providing the optional command-line argument -fileName to specify the database file name. If no file name is provided, the default file name will be used.
 5. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
 
+To run the Project5SimpleBankingSystem-1.0-SNAPSHOT.jar file, perform the following steps:
+
+1. Download the JAR file.
+2. Open a terminal or command prompt: Navigate to the directory where the JAR file is located.
+3. Run the JAR file: Enter the following command to execute the JAR file:
+```shell
+java -jar Project5SimpleBankingSystem-1.0-SNAPSHOT.jar
+```
+4. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
+
 ## Feedback
 During this project, I learned about the functioning of a banking system and gained knowledge about SQL and databases. Understanding how the Luhn algorithm works was particularly valuable in preventing errors when entering card numbers. Additionally, I grasped basic object-oriented programming concepts, such as working with classes.
 
