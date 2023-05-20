@@ -10,6 +10,8 @@ target/
 *.iws
 *.iml
 *.ipr
+build.gradle
+manifest.txt
 
 ### Eclipse ###
 .apt_generated

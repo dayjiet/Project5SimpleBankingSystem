@@ -38,7 +38,8 @@ The Simple Banking System offers the following features:
 1. Compile the project: Compile the Java classes using a Java compiler.
 2. Create a manifest file: Create a text file named manifest.txt and add the following content:
 ```shell
-Main-Class: Main
+Manifest-Version: 1.0
+Main-Class: banking.SimpleBankingSystem
 ```
 3. Create the JAR file: Open a terminal or command prompt, navigate to the directory containing the compiled classes and the manifest.txt file, and execute the following command:
 ```shell
