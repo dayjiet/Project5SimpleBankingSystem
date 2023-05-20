@@ -1,7 +1,4 @@
-# Simple Banking System (Java)
-```html
-https://hyperskill.org/projects/93?category=2&track=9
-```
+# [Simple Banking System (Java)](https://hyperskill.org/projects/93?category=2&track=9)
 
 ## Table of Contents
 - [Description](#description)
@@ -37,22 +34,22 @@ The Simple Banking System offers the following features:
 ### To create a JAR file for the Simple Banking System project, perform the following steps:
 1. Compile the project: Compile the Java classes using a Java compiler.
 2. Create a manifest file: Create a text file named manifest.txt and add the following content:
-```shell
-Manifest-Version: 1.0
-Main-Class: banking.SimpleBankingSystem
-```
+    ```shell
+    Manifest-Version: 1.0
+    Main-Class: banking.SimpleBankingSystem
+    ```
 3. Create the JAR file: Open a terminal or command prompt, navigate to the directory containing the compiled classes and the manifest.txt file, and execute the following command:
-```shell
-jar cvfm SimpleBankingSystem.jar manifest.txt *.class
-```
+    ```shell
+    jar cvfm SimpleBankingSystem.jar manifest.txt *.class
+    ```
 4. The SimpleBankingSystem.jar file will be created in the current directory.
 
 ### To run the JAR file, perform the following steps:
 
 1. Run the JAR file: Enter the following command to execute the JAR file:
-```shell
-java -jar Project5SimpleBankingSystem-1.0-SNAPSHOT.jar
-```
+    ```shell
+    java -jar Project5SimpleBankingSystem-1.0-SNAPSHOT.jar
+    ```
 2. Follow the on-screen instructions: The program will display a menu with different options. Enter the corresponding number to perform the desired action.
 
 ## Feedback
@@ -79,6 +76,8 @@ The Simple Banking System project has the following dependencies:
 2. SQLite JDBC Driver: Obtain the driver from a reliable source and include it in the project's classpath. The recommended version is 3.41.2. You can download the JDBC driver from the [SQLite JDBC Driver website](https://github.com/xerial/sqlite-jdbc/releases) or include it as a Maven/Gradle dependency.
 
 ## Contact Information
-If you have any questions or concerns regarding the Simple Banking System project, please contact the project maintainer:
-- Name: ```Daulet Toganbayev```
+If you have any questions, suggestions, or feedback regarding the Cinema Room Manager project, please contact:
+- Project Developer: ```Daulet Toganbayev```
 - Email: ```daulet.toganbayev@gmail.com```
+
+Feel free to reach out with any inquiries or contributions. Your input is highly appreciated!
