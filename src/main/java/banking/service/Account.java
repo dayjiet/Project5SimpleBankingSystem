@@ -11,6 +11,9 @@ import banking.view.Menu;
  */
 public class Account {
 
+    /**
+     * Connects to the database and shows the starting menu.
+     */
     public static void connect() {
         Database.connect();
         Menu.showStarting();
@@ -29,14 +32,23 @@ public class Account {
         Table.add(sql, number, pin);
     }
 
+    /**
+     * Updates the account information in the system.
+     */
     public static void update() {
         Table.update();
     }
 
+    /**
+     * Transfers funds between accounts.
+     */
     public static void transfer() {
         Table.transfer();
     }
 
+    /**
+     * Deletes an account from the system.
+     */
     public static void delete() {
         Table.delete();
         Menu.showStarting();
