@@ -1,6 +1,6 @@
 package banking;
 
-import banking.dao.Database;
+import banking.service.Account;
 
 /**
  * The SimpleBankingSystem class represents a simple banking system program.
@@ -37,6 +37,6 @@ public class SimpleBankingSystem {
 
         URL = "jdbc:sqlite:" + fileName;
 
-        Database.connect();
+        Account.connect();
     }
 }

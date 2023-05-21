@@ -1,6 +1,5 @@
 package banking.view;
 
-import banking.dao.Table;
 import banking.service.Account;
 import banking.service.CardNumber;
 import banking.service.PIN;
@@ -124,23 +123,17 @@ public class Menu {
             }
             case '2' -> {
                 System.out.println("\nEnter income:");
-                Table.update();
+                Account.update();
                 showAccount(cardNumber, card_PIN);
             }
             case '3' -> {
                 System.out.println("\nTransfer");
                 System.out.println("Your card number:");
-                Table.transfer();
+                Account.transfer();
                 showAccount(cardNumber, card_PIN);
             }
-            case '4' -> {
-                Table.delete();
-                showStarting();
-            }
-            case '5' -> {
-                Account.isLoggedIn(false);
-                showStarting();
-            }
+            case '4' -> Account.delete();
+            case '5' -> Account.isLoggedIn(false);
             default -> showAccount(cardNumber, card_PIN);
         }
     }

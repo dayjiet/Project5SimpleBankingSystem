@@ -1,6 +1,8 @@
 package banking.service;
 
+import banking.dao.Database;
 import banking.dao.Table;
+import banking.view.Menu;
 
 /**
  * The Account class represents a user account in the banking system.
@@ -8,6 +10,11 @@ import banking.dao.Table;
  * the login and exit status.
  */
 public class Account {
+
+    public static void connect() {
+        Database.connect();
+        Menu.showStarting();
+    }
 
     /**
      * Adds a new account to the system with the specified card number and PIN.
@@ -20,6 +27,19 @@ public class Account {
                 "VALUES (?,?)";
 
         Table.add(sql, number, pin);
+    }
+
+    public static void update() {
+        Table.update();
+    }
+
+    public static void transfer() {
+        Table.transfer();
+    }
+
+    public static void delete() {
+        Table.delete();
+        Menu.showStarting();
     }
 
     /**
@@ -70,6 +90,7 @@ public class Account {
             System.out.println("\nYou have successfully logged in!");
         } else {
             System.out.println("\nYou have successfully logged out!");
+            Menu.showStarting();
         }
     }
 

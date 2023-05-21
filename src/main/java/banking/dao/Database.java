@@ -1,7 +1,5 @@
 package banking.dao;
 
-import banking.view.Menu;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -19,8 +17,6 @@ public class Database {
 
             if (connection != null) {
                 Table.create();
-
-                Menu.showStarting();
             }
 
         } catch (SQLException e) {
