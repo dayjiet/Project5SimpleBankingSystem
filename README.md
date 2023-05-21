@@ -76,7 +76,7 @@ The Simple Banking System project has the following dependencies:
 2. SQLite JDBC Driver: Obtain the driver from a reliable source and include it in the project's classpath. The recommended version is 3.41.2. You can download the JDBC driver from the [SQLite JDBC Driver website](https://github.com/xerial/sqlite-jdbc/releases) or include it as a Maven/Gradle dependency.
 
 ## Contact Information
-If you have any questions, suggestions, or feedback regarding the Cinema Room Manager project, please contact:
+If you have any questions, suggestions, or feedback regarding the Simple Banking System project, please contact:
 - Project Developer: ```Daulet Toganbayev```
 - Email: ```daulet.toganbayev@gmail.com```
 
